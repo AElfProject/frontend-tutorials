@@ -4,6 +4,16 @@
 
 This README includes everything you need to start writing your tutorial content quickly.
 
+- [TutorialKit Starter](#tutorialkit-starter)
+  - [Project Structure](#project-structure)
+  - [Getting Started](#getting-started)
+  - [UI Structure](#ui-structure)
+  - [Authoring Content](#authoring-content)
+    - [Supported Content Formats](#supported-content-formats)
+    - [Metadata](#metadata)
+  - [Contributing](#contributing)
+  - [License](#license)
+
 ## Project Structure
 
 ```bash
@@ -147,3 +157,11 @@ string | [port: number, title: string] | { port: number, title: string }
 ```
 
 In most cases, metadata is inherited. For example, if you specify a `mainCommand` on a chapter without specifying it on any of its lessons, each lesson will use the `mainCommand` from its respective chapter. This extends to chapter and parts as well.
+
+## Contributing
+
+If you encounter a bug or have a feature request, please use the [Issue Tracker](https://github.com/AElfProject/frontend-tutorials/issues/new). The project is also open to contributions, so feel free to fork the project and open pull requests.
+
+## License
+
+Distributed under the MIT License. See [License](LICENSE) for more information.
