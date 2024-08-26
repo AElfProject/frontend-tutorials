@@ -3,7 +3,7 @@ type: lesson
 title: Connect Wallet Integration
 template: dao-dapp
 slug: connect-wallet-integration
-focus: /src/HomeDAO.tsx
+focus: /HomeDAO.tsx
 ---
 
 ### Write Connect Wallet Function

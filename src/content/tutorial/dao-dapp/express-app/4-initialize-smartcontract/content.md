@@ -3,6 +3,7 @@ type: lesson
 title: Initialize Smart Contract
 template: dao-dapp
 slug: initialize-smart-contract
+focus: /HomeDAO.tsx
 ---
 
 ### Write Initialize Smart Contract & Join DAO Functions

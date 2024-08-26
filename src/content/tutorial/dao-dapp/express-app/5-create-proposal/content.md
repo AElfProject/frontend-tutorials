@@ -3,6 +3,7 @@ type: lesson
 title: Create Proposal Function
 template: dao-dapp
 slug: create-proposal
+focus: /CreateProposal.tsx
 ---
 
 ### Write Create Proposal Function

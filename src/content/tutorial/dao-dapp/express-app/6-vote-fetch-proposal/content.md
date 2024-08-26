@@ -3,6 +3,7 @@ type: lesson
 title: Vote & Fetch Proposals Function
 template: dao-dapp
 slug: vote-and-fetch-proposal
+focus: /HomeDAO.tsx
 ---
 
 ### Write Vote & Fetch Proposals Function

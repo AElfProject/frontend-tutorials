@@ -3,13 +3,14 @@ type: lesson
 title: Configure Portkey Provider
 template: dao-dapp
 slug: configure-portkey-provider
+focus: /useDAOSmartContract.ts
 ---
 
 ### Configure Portkey Provider
 
 We'll set up our Portkey provider to let users connect their Portkey wallets to our app and interact with our voting smart contract.
 
-1. Go to the `src/useDAOSmartContract.ts` file.
+1. Open the `useDAOSmartContract.ts` file.
 
 2. In this file, we'll create a component that initializes the Portkey wallet provider and fetches our deployed voting smart contract. This will enable our frontend components to interact with the smart contract for actions like joining the DAO, creating proposals, and more.
 
