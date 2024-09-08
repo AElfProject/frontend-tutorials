@@ -10,29 +10,33 @@ focus: /HomeDAO.tsx
 
 Let's write the Initialize and Join DAO functions.
 
-- Find the comment `Step C - Write Initialize Smart Contract and Join DAO Logic` in `HomeDAO.tsx` File.
+- Find the comment `Step E - Write Initialize Smart Contract and Join DAO Logic` in `HomeDAO.tsx` File.
 
 - Replace the existing `initializeAndJoinDAO` function with this code snippet:
 
-```javascript title="src/HomeDAO.ts" add={3-23}
+```javascript title="src/HomeDAO.ts" add={3-27}
+//Step E - Write Initialize Smart Contract and Join DAO Logic
 const initializeAndJoinDAO = async () => {
-  //Step C - Write Initialize Smart Contract and Join DAO Logic
   try {
-    const accounts = await provider?.request({
-      method: MethodsBase.ACCOUNTS,
-    });
-    if (!accounts) throw new Error("No accounts");
-
-    const account = accounts?.tDVW?.[0];
-    if (!account) throw new Error("No account");
+    if (!DAOContract) {
+      throw new Error("No DAOContract Exist!");
+    }
 
     if (!initialized) {
-      await DAOContract?.callSendMethod("Initialize", account, {});
+      await DAOContract?.callSendMethod(
+        "Initialize", 
+        currentWalletAddress as string,
+        {}
+      );
       setInitialized(true);
       alert("DAO Contract Successfully Initialized");
     }
 
-    await DAOContract?.callSendMethod("JoinDAO", account, account);
+    await DAOContract?.callSendMethod(
+      "JoinDAO",
+      currentWalletAddress as string,
+      currentWalletAddress
+    );
     setJoinedDAO(true);
     alert("Successfully Joined DAO");
   } catch (error) {

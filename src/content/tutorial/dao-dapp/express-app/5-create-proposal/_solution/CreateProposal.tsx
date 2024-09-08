@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IPortkeyProvider, MethodsBase } from "@portkey/provider-types";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import useDAOSmartContract from "./useDAOSmartContract";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,8 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import "./CreateProposal.css";
-import useDAOSmartContract from "./useDAOSmartContract";
-import detectProvider from "@portkey/detect-provider";
+import { IWalletInfo } from "aelf-sdk/types/wallet";
 
 interface IProposalInput {
   creator: string;
@@ -28,22 +27,17 @@ interface IProposalInput {
 }
 
 const formSchema = z.object({
-  address: z.string(),
   title: z.string(),
   description: z.string(),
   voteThreshold: z.coerce.number(),
 });
 
 export default function CreateProposal() {
-  const [provider, setProvider] = useState<IPortkeyProvider | null>(null);
-  const [createProposalInput, setCreateProposalInput] =
-    useState<IProposalInput>();
-  const DAOContract = useDAOSmartContract(provider);
+  const [currentWalletAddress, setCurrentWalletAddress] = useState<string>();
+  const [privateKey, setPrivateKey] = useState("");
+  const DAOContract = useDAOSmartContract(privateKey);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const { currentWalletAddress } = location.state;
 
   const handleReturnClick = () => {
     navigate("/");
@@ -51,31 +45,47 @@ export default function CreateProposal() {
 
   const init = async () => {
     try {
-      setProvider(await detectProvider());
+      const walletResponse = localStorage.getItem("wallet");
+      if (!walletResponse) {
+        return;
+      }
+      const walletDetails: IWalletInfo = JSON.parse(walletResponse);
+      const walletAddress = walletDetails.address;
+      const pwKey = walletDetails?.privateKey;
+
+      if (walletAddress && pwKey) {
+        setCurrentWalletAddress(walletAddress);
+        setPrivateKey(pwKey);
+      }
     } catch (error) {
       console.log(error, "=====error");
     }
   };
 
   useEffect(() => {
-    if (!provider) init();
-  }, [provider]);
+    if (!currentWalletAddress) init();
+  }, [currentWalletAddress]);
 
-  //Step D - Configure Proposal Form
+  //Step F - Configure Proposal Form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: currentWalletAddress,
       title: "",
       description: "",
       voteThreshold: 0,
     },
   });
 
-  // Step E - Write Create Proposal Logic
+  // Step G - Write Create Proposal Logic
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("values",values)
+    if (!currentWalletAddress) {
+      alert("Please Login your account first");
+      handleReturnClick();
+      return;
+    }
     const proposalInput: IProposalInput = {
-      creator: currentWalletAddress,
+      creator: currentWalletAddress as string,
       title: values.title,
       description: values.description,
       voteThreshold: values.voteThreshold,
@@ -85,7 +95,7 @@ export default function CreateProposal() {
       try {
         await DAOContract?.callSendMethod(
           "CreateProposal",
-          currentWalletAddress,
+          currentWalletAddress as string,
           proposalInput
         );
 

@@ -203,6 +203,10 @@ body {
   padding-bottom: 20px;
 }
 
+.proposal-list h2{
+  color: white;
+}
+
 .proposals {
   margin-top: 20px;
 }

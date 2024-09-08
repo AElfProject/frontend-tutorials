@@ -1,14 +1,32 @@
-import { IPortkeyProvider, IChain } from "@portkey/provider-types";
 import { useEffect, useState } from "react";
+import AElf from "aelf-sdk";
+import { getContractBasic, IPortkeyContract } from "@portkey/contracts";
 
-function useDAOSmartContract(provider: IPortkeyProvider | null) {
-  const [smartContract, setSmartContract] =
-    useState<ReturnType<IChain["getContract"]>>();
+const useDAOSmartContract = (walletPrivateKey?: string | undefined) => {
+  const [smartContract, setSmartContract] = useState<IPortkeyContract>();
 
   //Step A - Setup Portkey Wallet Provider
-  useEffect(() => {});
+  useEffect(() => {
+    const getContract = async () => {
+      if (!walletPrivateKey) {
+        return;
+      }
+      try {
+        const wallet = AElf.wallet.getWalletByPrivateKey(walletPrivateKey);
+        const contract = await getContractBasic({
+          contractAddress: "2GkJoDicXLqo7cR9YhjCEnCXQt8KUFUTPfCkeJEaAxGFYQo2tb",
+          account: wallet,
+          rpcUrl: "https://tdvw-test-node.aelf.io",
+        });
+        setSmartContract(contract);
+      } catch (error) {
+        console.log("error in getContract", error);
+      }
+    };
+    walletPrivateKey && getContract();
+  }, [walletPrivateKey]);
 
   return smartContract;
-}
+};
 
 export default useDAOSmartContract;

@@ -16,29 +16,27 @@ We'll set up our Portkey provider to let users connect their Portkey wallets to 
 
 3. Locate the comment `Step A - Setup Portkey Wallet Provider` and replace the existing **useEffect** hook with the following code snippet:
 
-```javascript title="useDAOSmartContract.ts" add={3-21}
-//Step A - Setup Portkey Wallet Provider
-useEffect(() => {
-  (async () => {
-    if (!provider) return null;
-
-    try {
-      // 1. get the sidechain tDVW using provider.getChain
-      const chain = await provider?.getChain("tDVW");
-      if (!chain) throw new Error("No chain");
-
-      //Address of DAO Smart Contract
-      //Replace with Address of Deployed Smart Contract
-      const address = "your_deployed_voting_contract_address";
-
-      // 2. get the DAO contract
-      const daoContract = chain?.getContract(address);
-      setSmartContract(daoContract);
-    } catch (error) {
-      console.log(error, "====error");
-    }
-  })();
-}, [provider]);
+```javascript title="useDAOSmartContract.ts" add={3-19}
+ //Step A - Setup Portkey Wallet Provider
+  useEffect(() => {
+    const getContract = async () => {
+      if (!walletPrivateKey) {
+        return;
+      }
+      try {
+        const wallet = AElf.wallet.getWalletByPrivateKey(walletPrivateKey);
+        const contract = await getContractBasic({
+          contractAddress: "2GkJoDicXLqo7cR9YhjCEnCXQt8KUFUTPfCkeJEaAxGFYQo2tb",
+          account: wallet,
+          rpcUrl: "https://tdvw-test-node.aelf.io",
+        });
+        setSmartContract(contract);
+      } catch (error) {
+        console.log("error in getContract", error);
+      }
+    };
+    walletPrivateKey && getContract();
+  }, [walletPrivateKey]);
 ```
 
 :::tip
@@ -46,7 +44,7 @@ useEffect(() => {
 
 example:
 //Replace with Address of Deployed Smart Contract
-const address = "your_deployed_voting_contract_address";
+const address = "2GkJoDicXLqo7cR9YhjCEnCXQt8KUFUTPfCkeJEaAxGFYQo2tb";
 :::
 
 With fetch the vote contract, we're ready to write the function for Connect Portkey Wallet with our application on next step

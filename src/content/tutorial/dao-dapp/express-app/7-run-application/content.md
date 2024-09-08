@@ -14,62 +14,29 @@ In this step, we will test voting functionalities.
 
   ![vote-fe-ui](../../../../../assets/vote-fe-ui-1.png)
 
-#### Create Portkey Wallet
+##### Login with Portkey Wallet
 
-:::info
-Portkey is the first AA wallet from aelf's ecosystem, migrating users, developers and projects from Web2 to Web3 with DID solution.
+- Click on **Login** to connect your Portkey wallet. You will be get this select login options modal.
 
-Users can swiftly log into Portkey via their Web2 social info with no private keys or mnemonics required. Underpinned by social recovery and decentralized guardian design, Portkey safeguards users' assets from centralized control and theft. Portkey has a unique payment delegation mechanism which enables interested parties to function as delegatees to pay for user activities on users' behalf. This means that users can create accounts for free and fees for other usages may also be covered in Portkey.
+  ![wallet-select-options](../../../../../assets/wallet-select-options.png)
 
-Portkey also provides crypto on/off-ramp services, allowing users to exchange fiat with crypto freely. It supports the storage and management of various digital assets such as tokens, NFTs, etc. The compatibility with multi-chains and seamless connection to all kinds of DApps makes Portkey a great way to enter the world of Web3.
+###### 1. Import Wallet by Privatekey 
 
-With DID solution as its core, Portkey provides both Portkey Wallet and Portkey SDKs.
+  - Click on **Import Wallet** button and You will be get this below popup modal.
 
-For more information, you may visit the official documentation for Portkey at https://doc.portkey.finance/.
-:::
+  ![import-wallet](../../../../../assets/import-wallet.png)
 
-- Download the Chrome extension for Portkey from https://chromewebstore.google.com/detail/portkey-wallet/iglbgmakmggfkoidiagnhknlndljlolb.
+  - Enter the Privatekey of Portkey Wallet and Click on Import Wallet modal.
 
-:::info
-The Portkey extension supports Chrome browser only (for now). Please ensure that you are using Chrome browser.
-You may download Chrome from https://www.google.com/intl/en_sg/chrome/.
-:::
+###### 2. Create Wallet
 
-- Once you have downloaded the extension, you should see the following on your browser as shown below.
+  - Click on **Create Wallet** button as shown in below popup modal.
 
-  ![welcome-to-portkey](../../../../../assets/welcome-to-portkey.png)
+    ![wallet-select-options](../../../../../assets/wallet-select-options.png)
 
-- Click on `Get Start` and you should see the following interface as shown below.
+The button will change from **Login** to **Connected** when the connection is successful.
 
-  ![portkey-login](../../../../../assets/portkey-login.png)
 
-**Sign up**
-
-- Switch to **aelf Testnet** network by selecting it:
-
-  ![portkey-switch-to-testnet](../../../../../assets/portkey-switch-to-testnet.png)
-
-:::danger
-Please make sure you are using `aelf Testnet` in order to be able to receive your testnet tokens from the Faucet.
-:::
-
-- Proceed to sign up with a Google Account or your preferred login method and complete the necessary accounts creation prompts and you should observe the following interface once you have signed up.
-
-  ![success-login](../../../../../assets/success-login.png)
-
-With that, you have successfully created your very first Portkey wallet within seconds. How easy was that?
-
-:::info
-It is highly recommended to pin the Portkey wallet extension for easier access and navigation to your Portkey wallet!
-:::
-
-- Next, click on ‘Open Portkey’ and you should now observe the following as shown below.
-
-  ![portkey-wallet-preview](../../../../../assets/portkey-wallet-preview.png)
-
-**Connect Portkey Wallet**
-
-- Click on **"Connect Wallet"** to connect your Portkey wallet. The button will change to **"Connected"** when the connection is successful.
 
 - Next, click on **"Join DAO"**. You will be prompted to sign the **"Initialize"** and **"Join DAO"** methods, as shown below.
 
