@@ -14,7 +14,7 @@ const useDAOSmartContract = (walletPrivateKey?: string | undefined) => {
       try {
         const wallet = AElf.wallet.getWalletByPrivateKey(walletPrivateKey);
         const contract = await getContractBasic({
-          contractAddress: "2GkJoDicXLqo7cR9YhjCEnCXQt8KUFUTPfCkeJEaAxGFYQo2tb",
+          contractAddress: "2A9dd6syvmiqnFyDcybVvnvNhtNBWFjJqqaViQixNiWq6WSTQQ",
           account: wallet,
           rpcUrl: "https://tdvw-test-node.aelf.io",
         });

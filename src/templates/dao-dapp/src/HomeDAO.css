@@ -312,11 +312,11 @@ body {
 }
 
 /* Responsive design for smaller screens */
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   .proposal-card {
-    max-width: calc(50% - 20px);
+    grid-template-columns: repeat(2, 1fr);
   }
-}
+} */
 
 @media (max-width: 600px) {
   .proposal-card {

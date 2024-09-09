@@ -33,6 +33,18 @@ interface IVoteInput {
   vote: boolean;
 }
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast:any) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+
 function HomeDAO() {
   const [initialized, setInitialized] = useState(false);
   const [joinedDAO, setJoinedDAO] = useState(false);
@@ -72,7 +84,10 @@ function HomeDAO() {
         ""
       );
       setProposals(proposalResponse?.data);
-      alert("Fetched proposals");
+      Toast.fire({
+        icon: "success",
+        title: "Fetched Proposals successfully"
+      });
     } catch (error) {
       console.log(error, "=====error");
     }
@@ -81,19 +96,20 @@ function HomeDAO() {
   //Step B - Create a new Wallet on Portkey
   const createWallet = async () => {
     try {
-      // creating a new wallet by using createNewWallet function in aelf-sdk
       const newWallet = AElf.wallet.createNewWallet();
-      // storing wallet data in local storage
       localStorage.setItem("wallet", JSON.stringify(newWallet));
       const walletAddress = newWallet.address;
       const pwKey = newWallet?.privateKey;
       if (walletAddress && pwKey) {
-        // set the wallet data in local states
         setCurrentWalletAddress(walletAddress);
         setPrivateKey(pwKey);
         setIsConnected(true);
       }
-      Swal.fire("Successfully Wallet Created", "", "success");
+      await claimFaucet(walletAddress);
+      Toast.fire({
+        icon: "success",
+        title: "Successfully Wallet Created"
+      });
     } catch (error: any) {
       alert(error.message);
     }
@@ -102,7 +118,6 @@ function HomeDAO() {
   //Step C - Import Existing Portkey Wallet using Privatekey
   const importWalletUsingPrivatekey = async () => {
     try {
-      // show popup modal with input field
       const { value: walletPrivateKey } = await Swal.fire({
         title: "Enter Privatekey of Your Portkey Wallet ",
         input: "password",
@@ -114,10 +129,9 @@ function HomeDAO() {
         confirmButtonText: "Import Wallet",
         showCancelButton: true,
       });
-      if (!walletPrivateKey) {
-        return;
+      if(!walletPrivateKey){
+        return
       }
-      // importing wallet by privatekey using getWalletByPrivateKey function in aelf-sdk
       const wallet = AElf.wallet.getWalletByPrivateKey(walletPrivateKey);
       localStorage.setItem("wallet", JSON.stringify(wallet));
       const walletAddress = wallet.address;
@@ -127,13 +141,50 @@ function HomeDAO() {
         setPrivateKey(pwKey);
         setIsConnected(true);
       }
-      Swal.fire("Successfully Wallet Imported", "", "success");
-    } catch (error: any) {
+      await claimFaucet(walletAddress);
+      Toast.fire({
+        icon: "success",
+        title: "Successfully Wallet Imported"
+      });
+    } catch (error:any) {
       Swal.fire(error.message, "", "error");
     }
   };
 
-  //Step D - Handle Login
+  // Step D - Claim ELF Token form API
+  const claimFaucet = async (walletAddress:string) => {
+    // Check if the wallet address is provided by the user
+    if (!walletAddress) {
+      alert('Please enter a wallet address');  // Alert the user if the wallet address field is empty
+      return;  // Exit the function if no wallet address is provided
+    }
+  
+    try {
+      // Make the POST request to the API endpoint with the provided wallet address
+      const res = await fetch(`https://faucet.aelf.dev/api/claim?walletAddress=${walletAddress}`, {
+        method: 'POST',  // Specify that this is a POST request
+        headers: {
+          'Content-Type': 'application/json',  // Set the content type header to JSON
+        },
+      });
+  
+      // Check if the response is not ok (i.e., any HTTP status code other than 200-299)
+      if (!res.ok) {
+        throw new Error('Failed to claim faucet');  // Throw an error if the request was unsuccessful
+      }
+  
+      // Parse the response body as JSON
+      const data = await res.json();
+  
+      console.log("claimFaucet response",data)
+    } catch (error) {
+      // Log any errors that occur during the fetch or response parsing
+      console.error('Error claiming faucet:', error);
+    }
+  };
+  
+
+  //Step E - Handle Login
   const handleLogin = async () => {
     await Swal.fire({
       title: "Select Login Type",
@@ -144,20 +195,22 @@ function HomeDAO() {
       denyButtonText: "Create new Wallet",
     }).then((result: any) => {
       if (result.isConfirmed) {
-        // showing import wallet modal if user click on Import Wallet button
         importWalletUsingPrivatekey();
-      } else if (result.isDenied) {
-        // call createWallet function if user click on Create new Wallet button
+      } else if (result.isDenied) { 
         createWallet();
       }
     });
   };
 
-  //Step E - Write Initialize Smart Contract and Join DAO Logic
-  const initializeAndJoinDAO = async () => {};
+  //Step F - Write Initialize Smart Contract and Join DAO Logic
+  const initializeAndJoinDAO = async () => {
+    
+  };
 
-  //Step H - Write Vote Yes Logic
-  const voteYes = async (index: number) => {};
+  //Step I - Write Vote Yes Logic
+  const voteYes = async (index: number) => {
+
+  };
 
   const voteNo = async (index: number) => {
     try {
@@ -176,21 +229,20 @@ function HomeDAO() {
         currentWalletAddress as string,
         createVoteInput
       );
-      alert("Voted on Proposal");
+      Toast.fire({
+        icon: "success",
+        title: "Voted on Proposal"
+      })
       setHasVoted(true);
     } catch (error) {
       console.error(error, "=====error");
     }
   };
 
-  // Step I - Use Effect to Fetch Proposals
-  useEffect(() => {}, [
-    DAOContract,
-    hasVoted,
-    isConnected,
-    joinedDAO,
-    privateKey,
-  ]);
+  // Step J - Use Effect to Fetch Proposals
+  useEffect(() => {
+
+  }, [DAOContract, hasVoted, isConnected, joinedDAO, privateKey]);
 
   useEffect(() => {
     !isConnected && init();
@@ -207,7 +259,11 @@ function HomeDAO() {
           onClick={() => !isConnected && handleLogin()}
           className="header-button"
         >
-          {isConnected ? "Connected" : "Login"}
+          {isConnected
+            ? currentWalletAddress?.slice(0, 5) +
+              "....." +
+              currentWalletAddress?.slice(-5)
+            : "Login"}
         </Button>
       </div>
       <div className="DAO-info">

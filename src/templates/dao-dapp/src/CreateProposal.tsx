@@ -66,7 +66,7 @@ export default function CreateProposal() {
     if (!currentWalletAddress) init();
   }, [currentWalletAddress]);
 
-  //Step F - Configure Proposal Form
+  //Step G - Configure Proposal Form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,7 +76,7 @@ export default function CreateProposal() {
     },
   });
 
-  // Step G - Write Create Proposal Logic
+  // Step H - Write Create Proposal Logic
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("values",values)
     if (!currentWalletAddress) {

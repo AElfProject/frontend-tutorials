@@ -26,7 +26,7 @@ We'll set up our Portkey provider to let users connect their Portkey wallets to 
       try {
         const wallet = AElf.wallet.getWalletByPrivateKey(walletPrivateKey);
         const contract = await getContractBasic({
-          contractAddress: "2GkJoDicXLqo7cR9YhjCEnCXQt8KUFUTPfCkeJEaAxGFYQo2tb",
+          contractAddress: "2A9dd6syvmiqnFyDcybVvnvNhtNBWFjJqqaViQixNiWq6WSTQQ",
           account: wallet,
           rpcUrl: "https://tdvw-test-node.aelf.io",
         });

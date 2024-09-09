@@ -10,12 +10,12 @@ focus: /HomeDAO.tsx
 
 Let's write the Initialize and Join DAO functions.
 
-- Find the comment `Step E - Write Initialize Smart Contract and Join DAO Logic` in `HomeDAO.tsx` File.
+- Find the comment `//Step F - Write Initialize Smart Contract and Join DAO Logic` in `HomeDAO.tsx` File.
 
 - Replace the existing `initializeAndJoinDAO` function with this code snippet:
 
-```javascript title="src/HomeDAO.ts" add={3-27}
-//Step E - Write Initialize Smart Contract and Join DAO Logic
+```javascript title="src/HomeDAO.ts" add={3-34}
+//Step F - Write Initialize Smart Contract and Join DAO Logic
 const initializeAndJoinDAO = async () => {
   try {
     if (!DAOContract) {
@@ -24,21 +24,28 @@ const initializeAndJoinDAO = async () => {
 
     if (!initialized) {
       await DAOContract?.callSendMethod(
-        "Initialize", 
+        "Initialize",
         currentWalletAddress as string,
         {}
       );
       setInitialized(true);
-      alert("DAO Contract Successfully Initialized");
+      Toast.fire({
+        icon: "success",
+        title: "DAO Contract Successfully Initialized"
+      });
     }
 
-    await DAOContract?.callSendMethod(
+    const result = await DAOContract?.callSendMethod(
       "JoinDAO",
       currentWalletAddress as string,
       currentWalletAddress
     );
+
     setJoinedDAO(true);
-    alert("Successfully Joined DAO");
+    Toast.fire({
+      icon: "success",
+      title: "Successfully Joined DAO"
+    });
   } catch (error) {
     console.error(error, "====error");
   }

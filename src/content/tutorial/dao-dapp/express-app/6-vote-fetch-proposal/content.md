@@ -12,35 +12,39 @@ In this step, we'll write the Vote and Fetch Proposals functions to complete our
 
 - Open the `HomeDAO.tsx` file.
 
-- Scroll to the `Step H - Write Vote Yes Logic`.
+- Scroll to the `Step I - Write Vote Yes Logic`.
 
 - Replace the `voteYes` function with this code snippet:
 
-```javascript title="src/HomeDAO.tsx" add={3-23}
-  const voteYes = async (index: number) => {
-    //Step H - Write Vote Yes Logic
-    try {
-      if (!DAOContract) {
-        throw new Error("No DAOContract Exist!");
-      }
-
-      const createVoteInput: IVoteInput = {
-        voter: currentWalletAddress as string,
-        proposalId: index,
-        vote: true,
-      };
-
-      await DAOContract?.callSendMethod(
-        "VoteOnProposal",
-        currentWalletAddress as string,
-        createVoteInput
-      );
-      alert("Voted on Proposal");
-      setHasVoted(true);
-    } catch (error) {
-      console.error(error, "=====error");
+```javascript title="src/HomeDAO.tsx" add={3-27}
+//Step I - Write Vote Yes Logic
+const voteYes = async (index: number) => {
+  try {
+    if (!DAOContract) {
+      throw new Error("No DAOContract Exist!");
     }
-  };
+
+    const createVoteInput: IVoteInput = {
+      voter: currentWalletAddress as string,
+      proposalId: index,
+      vote: true,
+    };
+
+    await DAOContract?.callSendMethod(
+      "VoteOnProposal",
+      currentWalletAddress as string,
+      createVoteInput
+    );
+
+    Toast.fire({
+      icon: "success",
+      title: "Voted on Proposal"
+    });
+    setHasVoted(true);
+  } catch (error) {
+    console.error(error, "=====error");
+  }
+};
 ```
 
 #### Here's what the function does:
@@ -57,29 +61,33 @@ In this step, we'll write the Vote and Fetch Proposals functions to complete our
 
 The `voteNo` function works similarly but sets the vote to `false`.
 
-- Scroll down to the `Step I - Use Effect to Fetch Proposals` comment and replace the `useEffect` hook with this code snippet:
+- Scroll down to the `Step J - Use Effect to Fetch Proposals` comment and replace the `useEffect` hook with this code snippet:
 
-```tsx title="src/HomeDAO.tsx" add={3-21}
+```tsx title="src/HomeDAO.tsx" add={3-25}
+// Step J - Use Effect to Fetch Proposals
 useEffect(() => {
-  // Step I - Use Effect to Fetch Proposals
   const fetchProposals = async () => {
     try {
       if (!DAOContract) {
         throw new Error("No DAOContract Exist!");
       }
-      const proposalResponse = await (DAOContract?.callViewMethod)<IProposals>(
-        "GetAllProposals",
-        ""
-      );
+      const proposalResponse =
+        await (DAOContract?.callViewMethod)<IProposals>(
+          "GetAllProposals",
+          ""
+        );
 
       setProposals(proposalResponse.data);
-      console.log("proposalResponse.data", proposalResponse);
-      alert("Fetched Proposals");
+      
+      Toast.fire({
+        icon: "success",
+        title: "Fetched Proposals successfully"
+      });
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   fetchProposals();
 }, [DAOContract, hasVoted, isConnected, joinedDAO, privateKey]);
 ```

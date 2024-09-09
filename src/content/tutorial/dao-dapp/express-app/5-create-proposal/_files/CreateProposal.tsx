@@ -66,10 +66,10 @@ export default function CreateProposal() {
     if (!currentWalletAddress) init();
   }, [currentWalletAddress]);
 
-  //Step F - Configure Proposal Form
+  //Step G - Configure Proposal Form
   const form = useForm<z.infer<typeof formSchema>>({});
 
-  // Step G - Write Create Proposal Logic
+  // Step H - Write Create Proposal Logic
   function onSubmit(values: z.infer<typeof formSchema>) {
     
   }

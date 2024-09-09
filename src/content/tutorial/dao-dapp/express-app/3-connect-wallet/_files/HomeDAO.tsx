@@ -33,6 +33,18 @@ interface IVoteInput {
   vote: boolean;
 }
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast:any) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+
 function HomeDAO() {
   const [initialized, setInitialized] = useState(false);
   const [joinedDAO, setJoinedDAO] = useState(false);
@@ -72,7 +84,10 @@ function HomeDAO() {
         ""
       );
       setProposals(proposalResponse?.data);
-      alert("Fetched proposals");
+      Toast.fire({
+        icon: "success",
+        title: "Fetched Proposals successfully"
+      });
     } catch (error) {
       console.log(error, "=====error");
     }
@@ -80,7 +95,7 @@ function HomeDAO() {
 
   //Step B - Create a new Wallet on Portkey
   const createWallet = async () => {
-    
+
   };
 
   //Step C - Import Existing Portkey Wallet using Privatekey
@@ -88,17 +103,22 @@ function HomeDAO() {
 
   };
 
-  //Step D - Handle Login
+  // Step D - Claim ELF Token form API
+  const claimFaucet = async (walletAddress:string) => {
+
+  };
+
+  //Step E - Handle Login
   const handleLogin = async () => {
 
   };
 
-  //Step E - Write Initialize Smart Contract and Join DAO Logic
+  //Step F - Write Initialize Smart Contract and Join DAO Logic
   const initializeAndJoinDAO = async () => {
-    
+
   };
 
-  //Step H - Write Vote Yes Logic
+  //Step I - Write Vote Yes Logic
   const voteYes = async (index: number) => {
 
   };
@@ -120,16 +140,19 @@ function HomeDAO() {
         currentWalletAddress as string,
         createVoteInput
       );
-      alert("Voted on Proposal");
+      Toast.fire({
+        icon: "success",
+        title: "Voted on Proposal"
+      })
       setHasVoted(true);
     } catch (error) {
       console.error(error, "=====error");
     }
   };
 
-  // Step I - Use Effect to Fetch Proposals
+  // Step J - Use Effect to Fetch Proposals
   useEffect(() => {
-    
+
   }, [DAOContract, hasVoted, isConnected, joinedDAO, privateKey]);
 
   useEffect(() => {
@@ -147,7 +170,11 @@ function HomeDAO() {
           onClick={() => !isConnected && handleLogin()}
           className="header-button"
         >
-          {isConnected ? "Connected" : "Login"}
+          {isConnected
+            ? currentWalletAddress?.slice(0, 5) +
+              "....." +
+              currentWalletAddress?.slice(-5)
+            : "Login"}
         </Button>
       </div>
       <div className="DAO-info">

@@ -17,7 +17,7 @@ Let's write the Create Proposal function.
 - Replace the form variable with this code snippet:
 
 ```tsx title="src/CreateProposal.tsx" add={3-8}
-//Step F - Configure Proposal Form
+//Step G - Configure Proposal Form
 const form = useForm<z.infer<typeof formSchema>>({
   resolver: zodResolver(formSchema),
   defaultValues: {
@@ -50,7 +50,7 @@ Now, let's write the Create Proposal function for the form submission.
 - Replace the onSubmit function with this code snippet:
 
 ```javascript title="src/CreateProposal.tsx" add={3-30}
-  // Step G - Write Create Proposal Logic
+  // Step H - Write Create Proposal Logic
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!currentWalletAddress) {
       alert("Please Login your account first");
