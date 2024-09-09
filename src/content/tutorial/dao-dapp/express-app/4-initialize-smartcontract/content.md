@@ -54,11 +54,9 @@ const initializeAndJoinDAO = async () => {
 
 #### Here's what the function does:
 
-1. Fetches your wallet account using the Portkey wallet provider.
+1. Initializes the DAO smart contract if it hasn't been done already, updating the state and showing a success alert.
 
-2. Initializes the DAO smart contract if it hasn't been done already, updating the state and showing a success alert.
-
-3. Calls the JoinDAO method with your wallet address, updating the state and showing a success alert.
+2. Calls the JoinDAO method with your wallet address, updating the state and showing a success alert.
 
 Now, wrap the `initializeAndJoinDAO` function in the "Join DAO" button to trigger both Initialize and JoinDAO when clicked.
 

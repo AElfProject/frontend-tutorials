@@ -1,14 +1,14 @@
 ---
 type: lesson
-title: Configure Portkey Provider
+title: Configure Portkey with aelf-sdk
 template: dao-dapp
-slug: configure-portkey-provider
+slug: configure-portkey-wallet
 focus: /useDAOSmartContract.ts
 ---
 
-### Configure Portkey Provider
+### Configure Portkey with aelf-sdk
 
-We'll set up our Portkey provider to let users connect their Portkey wallets to our app and interact with our voting smart contract.
+We'll set up our Portkey wallet using `aelf-sdk` to let users connect their Portkey wallets to our app and interact with our voting smart contract.
 
 1. Open the `useDAOSmartContract.ts` file.
 

@@ -1,14 +1,14 @@
 ---
 type: lesson
-title: Connect Wallet Integration
+title: Connect wallet with aelf-sdk
 template: dao-dapp
 slug: connect-wallet-integration
 focus: /HomeDAO.tsx
 ---
 
-### Write Connect Wallet Function
+### Write Connect wallet with aelf-sdk
 
-Now, we'll write the Function for connect Portkey Wallet with out DAO dApp so Follow the Below steps.
+Now, we'll write the Function for Create and Import Portkey Wallet using aelf-sdk with out DAO dApp so Follow the Below steps.
 
 1. Open the `HomeDAO.tsx` file.
 

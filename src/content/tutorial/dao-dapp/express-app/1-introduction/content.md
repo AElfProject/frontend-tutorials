@@ -27,8 +27,8 @@ In this tutorial, you’ll integrate the vote smart contract with frontend compo
 After developing the dApp, you’ll test its key functionalities by:
 
   - **Running the Application**: Testing the voting functionalities to ensure that proposals can be created, voted on, and their statuses updated in real-time.
-  - **Creating a Portkey Wallet**: Portkey is a wallet that allows users to log in with Web2 social info, offering a seamless Web3 experience without private keys or mnemonics. You'll integrate this wallet into your dApp to manage user authentication and transactions.
-  - **Connecting the Wallet**: You’ll connect the Portkey wallet to your DAO, enabling users to join the DAO, vote on proposals, and track proposal statuses.
+  - **Creating a Portkey Wallet with [aelf-sdk](https://docs.aelf.dev/tools/chain-sdk/javascript-sdk/)**: Create Wallet using **aelf-sdk** that allows users to log in with Web2 social info, offering a seamless Web3 experience without private keys or mnemonics. You'll integrate this wallet into your dApp to manage user authentication and transactions.
+  - **Importing the Wallet using Privatekey**: You’ll import wallet using privatekey to your DAO, enabling users to join the DAO, vote on proposals, and track proposal statuses.
   - **Interacting with the DAO**: Once connected, users can join the DAO, vote on predefined proposals, and even create new proposals directly through the frontend interface.
 
 #### Let’s Get Started
